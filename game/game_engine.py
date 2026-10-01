@@ -85,25 +85,24 @@ elif self.cpu_score >= self.target_score:
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
              if self.game_over:
-            self.player_score = 0
-            self.cpu_score = 0
-            self.game_over = False
-            self.winner = None
-            self.player_choice = 0
-            self.cpu_choice = 0
-            self.result_text = "Make your move!"
-            self.result_color = (220, 225, 235)
-            self.showing_result = False
-        return
-
-    if self.game_over:
-        return
-
-    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        for btn in self.buttons:
-            if btn.contains(event.pos):
-                self.play_round(btn.choice_name)
-                break
+                 self.player_score = 0
+                 self.cpu_score = 0
+                 self.game_over = False
+                 self.winner = None
+                 self.player_choice = 0
+                 self.cpu_choice = 0
+                 self.result_text = "Make your move!"
+                 self.result_color = (220, 225, 235)
+                 self.showing_result = False
+                 return
+                 
+                 if self.game_over:
+                     return
+                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                         for btn in self.buttons:
+                             if btn.contains(event.pos):
+                                 self.play_round(btn.choice_name)
+                                 break
        
 
     
