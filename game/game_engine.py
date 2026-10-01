@@ -72,12 +72,38 @@ class GameEngine:
         self.showing_result = True
         self.round_resolved_time = pygame.time.get_ticks()
 
+    self.showing_result = True
+self.round_resolved_time = pygame.time.get_ticks()
+
+if self.player_score >= self.target_score:
+    self.game_over = True
+    self.winner = "PLAYER"
+elif self.cpu_score >= self.target_score:
+    self.game_over = True
+    self.winner = "CPU"
+
     def handle_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for btn in self.buttons:
-                if btn.contains(event.pos):
-                    self.play_round(btn.choice_name)
-                    break
+    if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+        if self.game_over:
+            self.player_score = 0
+            self.cpu_score = 0
+            self.game_over = False
+            self.winner = None
+            self.player_choice = 0
+            self.cpu_choice = 0
+            self.result_text = "Make your move!"
+            self.result_color = (220, 225, 235)
+            self.showing_result = False
+        return
+
+    if self.game_over:
+        return
+
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        for btn in self.buttons:
+            if btn.contains(event.pos):
+                self.play_round(btn.choice_name)
+                break
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -90,6 +116,58 @@ class GameEngine:
 
     def render(self, screen):
         screen.fill((24, 28, 36))
+
+    if self.game_over:
+        title = self.font_title.render(
+            "GAME OVER",
+            True,
+            (245, 245, 245)
+        )
+        screen.blit(
+            title,
+            (self.width // 2 - title.get_width() // 2, 70)
+        )
+
+        if self.winner == "PLAYER":
+            winner_text = "PLAYER WINS!"
+            winner_color = (80, 230, 120)
+        else:
+            winner_text = "CPU WINS!"
+            winner_color = (240, 80, 80)
+
+        winner_surf = self.font_arena.render(
+            winner_text,
+            True,
+            winner_color
+        )
+        screen.blit(
+            winner_surf,
+            (self.width // 2 - winner_surf.get_width() // 2, 130)
+        )
+
+        score_text = self.font_hud.render(
+            f"Final Score: {self.player_score} - {self.cpu_score}",
+            True,
+            (225, 225, 230)
+        )
+        screen.blit(
+            score_text,
+            (self.width // 2 - score_text.get_width() // 2, 180)
+        )
+
+        restart_text = self.font_hud.render(
+            "Press R to play again",
+            True,
+            (190, 195, 205)
+        )
+        screen.blit(
+            restart_text,
+            (self.width // 2 - restart_text.get_width() // 2, 230)
+        )
+
+        return
+
+    title_surf = self.font_title.render("Rock Paper Scissors", True, (245, 245, 245))
 
         title_surf = self.font_title.render("Rock Paper Scissors", True, (245, 245, 245))
         screen.blit(title_surf, (self.width // 2 - title_surf.get_width() // 2, 14))
