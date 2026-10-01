@@ -83,8 +83,8 @@ elif self.cpu_score >= self.target_score:
     self.winner = "CPU"
 
     def handle_event(self, event):
-    if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-        if self.game_over:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+             if self.game_over:
             self.player_score = 0
             self.cpu_score = 0
             self.game_over = False
@@ -104,6 +104,9 @@ elif self.cpu_score >= self.target_score:
             if btn.contains(event.pos):
                 self.play_round(btn.choice_name)
                 break
+       
+
+    
 
     def update(self):
         now = pygame.time.get_ticks()
